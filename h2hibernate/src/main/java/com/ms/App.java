@@ -1,9 +1,12 @@
 package com.ms;
  
 import java.util.Date;
+
 import org.hibernate.Session;
+
 import com.ms.util.HibernateUtil;
 import com.ms.h2hibernate.DBUser;
+import com.ms.h2hibernate.Product;
  
 public class App {
 	public static void main(String[] args) {
@@ -17,18 +20,29 @@ public class App {
 		user.setUsername("superman");
 		user.setCreatedBy("system");
 		user.setCreatedDate(new Date());
- 
-		session.save(user);
-		session.getTransaction().commit();
+		user.setNickname("nick");
 
+		Product p = new Product();
+		p.setPID("VVAB12345678");
+		p.setType("audio");
+		p.setTitle("my first song");
+		p.setArtist("my little airport");
+
+
+		session.save(user);
+		session.save(p);
+		session.getTransaction().commit();
+		
 		session.beginTransaction();
 		DBUser olduser = (DBUser)session.get(DBUser.class, 100);
-		System.out.println("retrieved user: " + olduser.getUsername() + " " + olduser.getCreatedDate());
+		Product p1 = (Product)session.get(Product.class, "VVAB12345678");
+		System.out.println("retrieved user: " + olduser);
+		System.out.println("retrieved product: " + p1);
 		user.setUsername("spiderman");
+		user.setNickname("spidernick");
 		session.save(user);
 		session.getTransaction().commit();
 		DBUser yetanotherolduser = (DBUser)session.get(DBUser.class, 100);
-		System.out.println("retrieved user: " + yetanotherolduser.getUsername() +
-				" " + yetanotherolduser.getCreatedDate());
+		System.out.println("retrieved user: " + yetanotherolduser);
 	}
 }
