@@ -15,7 +15,16 @@ public class DBUser implements java.io.Serializable {
 	private String username;
 	private String createdBy;
 	private Date createdDate;
+	private String nickname;
  
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	public DBUser() {
 	}
  
@@ -57,6 +66,13 @@ public class DBUser implements java.io.Serializable {
  
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	@Override
+	public String toString() {
+		return "DBUser [userId=" + userId + ", username=" + username
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", nickname=" + nickname + "]";
 	}
  
 }

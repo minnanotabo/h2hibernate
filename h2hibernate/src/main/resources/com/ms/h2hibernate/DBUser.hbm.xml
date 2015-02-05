@@ -16,5 +16,26 @@
         <property name="createdDate" type="date">
             <column name="CREATED_DATE" length="7" not-null="true" />
         </property>
+        <property name="nickname" type="string">
+            <column name="NICKNAME" length="20" not-null="true" />
+        </property>
+    </class>
+        <class name="com.ms.h2hibernate.Product" table="PRODUCT">
+        <id name="PID" type="string">
+            <column name="PID" length="12" not-null="true" />
+            <generator class="assigned" />
+        </id>
+        <property name="type" type="string">
+            <column name="TYPE" length="20" not-null="true" />
+        </property>
+        <property name="title" type="string">
+            <column name="TITLE" length="1000" not-null="true" />
+        </property>
+        <property name="artist" type="string">
+            <column name="ARTIST" length="1000" not-null="true" />
+        </property>
+        <property name="duration" type="int">
+            <column name="DURATION" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>
