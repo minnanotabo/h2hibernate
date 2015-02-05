@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import com.ms.util.HibernateUtil;
 import com.ms.h2hibernate.DBUser;
 import com.ms.h2hibernate.Product;
+import com.ms.h2hibernate.service.UserService;
  
 public class App {
 	public static void main(String[] args) {
@@ -45,5 +46,16 @@ public class App {
 		session.getTransaction().commit();
 		DBUser yetanotherolduser = (DBUser)session.get(DBUser.class, 100);
 		System.out.println("retrieved user: " + yetanotherolduser);
+		
+		user = new DBUser();
+		 
+		user.setUserId(101);
+		user.setUsername("addbyservice");
+		user.setCreatedBy("testprogram");
+		user.setCreatedDate(new Date());
+		user.setNickname("service");
+
+		UserService userService = new UserService();
+		userService.addUser(user);
 	}
 }
