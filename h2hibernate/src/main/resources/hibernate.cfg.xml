@@ -10,8 +10,6 @@
   <property name="hibernate.hbm2ddl.auto">create</property>
   <!--  <property name="hibernate.default_schema">myschema</property>  -->
   <property name="show_sql">true</property>
-  <mapping class="com.ms.h2hibernate.DBUser"></mapping>
-  <mapping class="com.ms.h2hibernate.Product"></mapping>
   <mapping class="com.ms.h2hibernate.ShortURL"></mapping>
 </session-factory>
 </hibernate-configuration>
