@@ -1,8 +1,14 @@
 package com.ms.h2hibernate.service;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.transaction.Transaction;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.ms.h2hibernate.ShortURL;
@@ -41,5 +47,28 @@ public class ShortURLService {
         session.close();
         return shortURL;
 	}
+	
+	public void listShortURL() {
+	      Session session = HibernateUtil.getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try{
+	  		session.beginTransaction();
+	  		//List urls = session.createQuery("FROM SHORTURL").list(); 
+	  		Query query = (Query) session.createSQLQuery("select * from SHORTURL")
+	  				.addEntity(ShortURL.class);
+	  		List urls = ((org.hibernate.Query) query).list();
+	        for (Iterator iterator = 
+	        		urls.iterator(); iterator.hasNext();){
+	            ShortURL sURL = (ShortURL) iterator.next(); 
+	            System.out.println("ShortURL: " + sURL); 
+	         }
+			session.getTransaction().commit();
+	      }catch (HibernateException e) {
+	         if (session.getTransaction()!=null) 
+	        	 session.getTransaction().rollback();
+	      }finally {
+	         session.close(); 
+	      }
+	   }
 
 }
