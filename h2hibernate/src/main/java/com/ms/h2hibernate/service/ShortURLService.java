@@ -53,10 +53,9 @@ public class ShortURLService {
 	      Transaction tx = null;
 	      try{
 	  		session.beginTransaction();
-	  		//List urls = session.createQuery("FROM SHORTURL").list(); 
-	  		Query query = (Query) session.createSQLQuery("select * from SHORTURL")
-	  				.addEntity(ShortURL.class);
-	  		List urls = ((org.hibernate.Query) query).list();
+	  		//List urls = session.createQuery("FROM SHORTURL").list();
+	  		Query query = session.createQuery("from ShortURL");
+	  		List urls = query.list();
 	        for (Iterator iterator = 
 	        		urls.iterator(); iterator.hasNext();){
 	            ShortURL sURL = (ShortURL) iterator.next(); 
