@@ -1,5 +1,6 @@
 package com.ms.h2hibernate.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -53,8 +54,7 @@ public class ShortURLService {
 	      Transaction tx = null;
 	      try{
 	  		session.beginTransaction();
-	  		//List urls = session.createQuery("FROM SHORTURL").list();
-	  		Query query = session.createQuery("from ShortURL");
+	  		Query query = session.createQuery("from ShortURL"); // the case DOES matter !
 	  		List urls = query.list();
 	        for (Iterator iterator = 
 	        		urls.iterator(); iterator.hasNext();){
@@ -68,6 +68,31 @@ public class ShortURLService {
 	      }finally {
 	         session.close(); 
 	      }
+	   }
+
+	public List<String> getShortURLByOriginalURL(String originalURL) {
+	      Session session = HibernateUtil.getSessionFactory().openSession();
+	      Transaction tx = null;
+	      List<String> result = new ArrayList<String>();
+	      try{
+	  		session.beginTransaction();
+	  		Query query = session.createQuery("from ShortURL where ORIGINALURL = :ourl"); // the case DOES matter !
+	  		query.setParameter("ourl", originalURL);
+	  		List urls = query.list();
+	        for (Iterator iterator = 
+	        		urls.iterator(); iterator.hasNext();){
+	            ShortURL sURL = (ShortURL) iterator.next(); 
+	            System.out.println("ShortURL: " + sURL); 
+	            result.add(sURL.getShortURL());
+	         }
+			session.getTransaction().commit();
+	      }catch (HibernateException e) {
+	         if (session.getTransaction()!=null) 
+	        	 session.getTransaction().rollback();
+	      }finally {
+	         session.close(); 
+	      }
+	      return result;
 	   }
 
 }

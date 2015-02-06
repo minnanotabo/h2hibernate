@@ -1,5 +1,7 @@
 package com.ms;
  
+import java.util.List;
+
 import com.ms.h2hibernate.ShortURL;
 import com.ms.h2hibernate.service.ShortURLService;
 
@@ -10,7 +12,7 @@ public class ShortURLTest {
 		ShortURLService service = new ShortURLService();
 		String shortURL = null;
 		
-		String[] ourls = { "long1", "long2", "long3"};
+		String[] ourls = { "long1", "long2", "long3", "long2", "long2"};
 		for (String ourl : ourls) {
 			shortURL = service.addShortURL(ourl, ourl + "abc@gmail.com");
 			System.out.println("shortURL for " + ourl + " is: " + shortURL);
@@ -23,6 +25,11 @@ public class ShortURLTest {
 		System.out.println("shortURLObj: " + sURL);
 		
 		service.listShortURL();
+		
+		List<String> long2 = service.getShortURLByOriginalURL("long2");
+		for (String s : long2) {
+			System.out.println("shortURL for long2: " + s);
+		}
 		
 	}
 }
